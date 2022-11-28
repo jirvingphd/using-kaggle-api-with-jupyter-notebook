@@ -10,103 +10,51 @@
 
 >- Please follow the steps below to download and use kaggle data within Python. (Original Source: https://github.com/Kaggle/kaggle-api#api-credentials)
 1. Log into www.kaggle.com 
+
+
 2. Go to your Account page <br>(Click on your profile pic in top right corner of website and select Account)
+
+
 3. Scroll down to API section and:
      - Click Expire API Token to remove previous tokens.
      - Click on **Create New API Token** 
          - It will download `kaggle.json` file on your machine that needs to be moved to a special "~/.kaggle" folder.
 
+
 4. Make the `~/.kaggle/` folder.
     - Short Relative Filepath version:
-        - ```bash
-        mkdir ~/.kaggle/
-        ```
+        - `mkdir ~/.kaggle/`
     - Full Absolute Filepath Version:
-        - will be something like 
-        ```bash
-        mkdir "/Users/YOUR-USERNAME/.kaggle/"
-        ``` 
-        - or 
-        ```bash
-        mkdir "/c/Users/YOUR-USERNAME/.kaggle"
-        ```
+        - will be something like:   
+        `mkdir "/Users/YOUR-USERNAME/.kaggle/`
+        - or: `mkdir "/c/Users/YOUR-USERNAME/.kaggle"`
+
+
         
 5. Move the kaggle.json file to the new `.kaggle` folder.
     - See the ["API Credentials" section of the kaggle api README for details](https://github.com/Kaggle/kaggle-api#api-credentials)
     - Example shell command:
-    ```bash
-    cp ~/Downloads/kaggle.json ~/.kaggle/
-    ```
+    `cp ~/Downloads/kaggle.json ~/.kaggle/`
+    
+    
     
 6. Change access permissions to just your user account
-    ```bash
-    chmod 600 ~/.kaggle/kaggle.json
-    ```
+    `chmod 600 ~/.kaggle/kaggle.json`
+    
+    
 7. Confirm the API credentials work.
     - Run the command to list datasets:
-    ```bash
-    kaggle datasets list
-    ```
+    `kaggle datasets list`
+    
+    
 8. Remove the kaggle.json from the downloads folder:
-    ```bash
-    rm ~/kaggle.json
-    ```
+    `rm ~/kaggle.json`
     
 
 
-## Colab
+# Downloading Data with the Kaggle API
 
-[Using the Kaggle API on Colab](https://www.kaggle.com/general/74235)
-
->- Please follow the steps below to download and use kaggle data within Google Colab: <br> (Instructions adapted from [Using the Kaggle API on Colab](https://www.kaggle.com/general/74235))
-    1. Go to your account, Scroll to API section and **Click Expire API Token** to remove previous tokens.
-    2. Click on **Create New API Token** - It will download `kaggle.json` file on your machine.
-    3. Go to your Google Colab project file and run the following commands:
-        1. `!pip install -q kaggle`
-        2. `from google.colab import files`<br>`files.upload();`
-            - Choose the kaggle.json file that you downloaded
-        3. `!mkdir ~/.kaggle`<br>`!cp kaggle.json ~/.kaggle/`
-            - Make directory named kaggle and copy kaggle.json file there.
-        4. `!chmod 600 ~/.kaggle/kaggle.json`
-            - Change the permissions of the file.
-        5. Test the installation using: `! kaggle datasets list`
-        6. Remove the uploaded kaggle.json: 
-            -  `!rm kaggle.json`
-
-> 
-
-#### Uncomment the cells below for Colab
-
-
-```python
-# ## Install kaggle api and upkoad kaggle.json
-# ! pip install kaggle
-# from google.colab import files
-# files.upload();
-```
-
-
-```python
-# ## Make .kaggle directory and copy json fil
-# ! mkdir ~/.kaggle
-# ! cp kaggle.json ~/.kaggle/
-
-#  ## Change the permissions on the kaggle.json file
-# !chmod 600 ~/.kaggle/kaggle.json
-
-# ## remove original uploaded copy of kaggle.json
-# !rm kaggle.json
-```
-
-
-```python
-# ## Check list of available datasetss
-# !kaggle datasets list
-```
-
-## Downloading Data with the Kaggle API
-
-### From the Shell
+## From the Shell
 
 >- On any dataset listing on Kaggle, click on the `...` on the menu and select "Copy API Command"
   - paste the command in a cell and add a `!` to the beginning.
@@ -114,13 +62,13 @@
   - Then, run `!unzip` on the name of the dataset source (the last part of the api command).
     - e.g. `!unzip fake-or-real-news.zip` 
 
-#### Example Shell Command for Downloading a Dataset
+### Example Shell Command for Downloading a Dataset
 ```python
 !kaggle datasets download -d jillanisofttech/fake-or-real-news
 !unzip fake-or-real-news
 ```
 
-### Using Kaggle Api - From Jupyter
+## Using Kaggle Api - From Jupyter
 
 
 ```python
@@ -163,7 +111,7 @@ data_fpath
 
 
 
-#### Using `kaggle.dataset_download_files`
+### Using `kaggle.dataset_download_files`
 
 ```
 Signature:
@@ -194,7 +142,6 @@ kaggle.dataset_download_files(dataset_name,
                               path=data_fpath,
                               force=True,
                               unzip=True)
-
 ```
 
 
@@ -214,7 +161,7 @@ dl_files = glob.glob(data_fpath+"*")
 ```python
 import pandas as pd
 df = pd.read_csv(dl_files[0])
-df
+df.head(3)
 ```
 
 
@@ -334,201 +281,61 @@ df
       <td>No effect</td>
       <td>I understand.</td>
     </tr>
-    <tr>
-      <th>3</th>
-      <td>8/27/2022 21:40:40</td>
-      <td>61.0</td>
-      <td>YouTube Music</td>
-      <td>2.5</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>Yes</td>
-      <td>Jazz</td>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>...</td>
-      <td>Sometimes</td>
-      <td>Never</td>
-      <td>Never</td>
-      <td>Never</td>
-      <td>9.0</td>
-      <td>7.0</td>
-      <td>3.0</td>
-      <td>3.0</td>
-      <td>Improve</td>
-      <td>I understand.</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>8/27/2022 21:54:47</td>
-      <td>18.0</td>
-      <td>Spotify</td>
-      <td>4.0</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>No</td>
-      <td>R&amp;B</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>...</td>
-      <td>Very frequently</td>
-      <td>Very frequently</td>
-      <td>Never</td>
-      <td>Rarely</td>
-      <td>7.0</td>
-      <td>2.0</td>
-      <td>5.0</td>
-      <td>9.0</td>
-      <td>Improve</td>
-      <td>I understand.</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>731</th>
-      <td>10/30/2022 14:37:28</td>
-      <td>17.0</td>
-      <td>Spotify</td>
-      <td>2.0</td>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>Rock</td>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>...</td>
-      <td>Never</td>
-      <td>Rarely</td>
-      <td>Very frequently</td>
-      <td>Never</td>
-      <td>7.0</td>
-      <td>6.0</td>
-      <td>0.0</td>
-      <td>9.0</td>
-      <td>Improve</td>
-      <td>I understand.</td>
-    </tr>
-    <tr>
-      <th>732</th>
-      <td>11/1/2022 22:26:42</td>
-      <td>18.0</td>
-      <td>Spotify</td>
-      <td>1.0</td>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>Pop</td>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>...</td>
-      <td>Never</td>
-      <td>Never</td>
-      <td>Sometimes</td>
-      <td>Sometimes</td>
-      <td>3.0</td>
-      <td>2.0</td>
-      <td>2.0</td>
-      <td>5.0</td>
-      <td>Improve</td>
-      <td>I understand.</td>
-    </tr>
-    <tr>
-      <th>733</th>
-      <td>11/3/2022 23:24:38</td>
-      <td>19.0</td>
-      <td>Other streaming service</td>
-      <td>6.0</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>Yes</td>
-      <td>Rap</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>...</td>
-      <td>Sometimes</td>
-      <td>Sometimes</td>
-      <td>Rarely</td>
-      <td>Rarely</td>
-      <td>2.0</td>
-      <td>2.0</td>
-      <td>2.0</td>
-      <td>2.0</td>
-      <td>Improve</td>
-      <td>I understand.</td>
-    </tr>
-    <tr>
-      <th>734</th>
-      <td>11/4/2022 17:31:47</td>
-      <td>19.0</td>
-      <td>Spotify</td>
-      <td>5.0</td>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>Classical</td>
-      <td>No</td>
-      <td>No</td>
-      <td>...</td>
-      <td>Never</td>
-      <td>Never</td>
-      <td>Never</td>
-      <td>Sometimes</td>
-      <td>2.0</td>
-      <td>3.0</td>
-      <td>2.0</td>
-      <td>1.0</td>
-      <td>Improve</td>
-      <td>I understand.</td>
-    </tr>
-    <tr>
-      <th>735</th>
-      <td>11/9/2022 1:55:20</td>
-      <td>29.0</td>
-      <td>YouTube Music</td>
-      <td>2.0</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>No</td>
-      <td>Hip hop</td>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>...</td>
-      <td>Very frequently</td>
-      <td>Very frequently</td>
-      <td>Very frequently</td>
-      <td>Rarely</td>
-      <td>2.0</td>
-      <td>2.0</td>
-      <td>2.0</td>
-      <td>5.0</td>
-      <td>Improve</td>
-      <td>I understand.</td>
-    </tr>
   </tbody>
 </table>
-<p>736 rows × 33 columns</p>
+<p>3 rows × 33 columns</p>
 </div>
 
 
+
+___
+
+# Using Kaggle API on Google Colab
+
+[Using the Kaggle API on Colab](https://www.kaggle.com/general/74235)
+
+>- Please follow the steps below to download and use kaggle data within Google Colab: <br> (Instructions adapted from [Using the Kaggle API on Colab](https://www.kaggle.com/general/74235))
+    1. Go to your account, Scroll to API section and **Click Expire API Token** to remove previous tokens.
+    2. Click on **Create New API Token** - It will download `kaggle.json` file on your machine.
+    3. Go to your Google Colab project file and run the following commands:
+        1. `!pip install -q kaggle`
+        2. `from google.colab import files`<br>`files.upload();`
+            - Choose the kaggle.json file that you downloaded
+        3. `!mkdir ~/.kaggle`<br>`!cp kaggle.json ~/.kaggle/`
+            - Make directory named kaggle and copy kaggle.json file there.
+        4. `!chmod 600 ~/.kaggle/kaggle.json`
+            - Change the permissions of the file.
+        5. Test the installation using: `! kaggle datasets list`
+        6. Remove the uploaded kaggle.json: 
+            -  `!rm kaggle.json`
+
+> 
+
+#### Uncomment the cells below for Colab
+
+
+```python
+# ## Install kaggle api and upkoad kaggle.json
+# ! pip install kaggle
+# from google.colab import files
+# files.upload();
+```
+
+
+```python
+# ## Make .kaggle directory and copy json fil
+# ! mkdir ~/.kaggle
+# ! cp kaggle.json ~/.kaggle/
+
+#  ## Change the permissions on the kaggle.json file
+# !chmod 600 ~/.kaggle/kaggle.json
+
+# ## remove original uploaded copy of kaggle.json
+# !rm kaggle.json
+```
+
+
+```python
+# ## Check list of available datasetss
+# !kaggle datasets list
+```
